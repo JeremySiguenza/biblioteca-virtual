@@ -1,0 +1,582 @@
+/* =========================
+   🎨 SISTEMA BIBLIOTECA PRO
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#f1f5f9;
+    color:#1e293b;
+
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    width:100%;
+    background:linear-gradient(
+        90deg,
+        #0f172a,
+        #1e293b
+    );
+
+    padding:18px 40px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.15);
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:white;
+    letter-spacing:0.5px;
+}
+
+.menu{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.menu a{
+    color:#cbd5e1;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+    position:relative;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:white;
+}
+
+.menu a::after{
+    content:'';
+    position:absolute;
+    width:0%;
+    height:2px;
+    left:0;
+    bottom:-6px;
+    background:#3b82f6;
+    transition:0.3s;
+}
+
+.menu a:hover::after{
+    width:100%;
+}
+
+/* =========================
+   USUARIO
+========================= */
+
+.usuario{
+    background:rgba(255,255,255,0.1);
+    color:white;
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:14px;
+    backdrop-filter:blur(10px);
+}
+
+/* =========================
+   NOTIFICACIONES
+========================= */
+
+.notif{
+    position:relative;
+    cursor:pointer;
+    color:white;
+    font-size:20px;
+}
+
+.notif-count{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+
+    background:#ef4444;
+    color:white;
+
+    font-size:10px;
+    font-weight:700;
+
+    padding:3px 7px;
+
+    border-radius:50%;
+}
+
+.dropdown{
+    display:none;
+
+    position:absolute;
+    top:35px;
+    right:0;
+
+    width:280px;
+
+    background:white;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.15);
+}
+
+.notif:hover .dropdown{
+    display:block;
+}
+
+.dropdown p{
+    padding:14px;
+    border-bottom:1px solid #e2e8f0;
+    font-size:14px;
+    color:#334155;
+}
+
+.dropdown p:hover{
+    background:#f8fafc;
+}
+
+/* =========================
+   ALERTAS
+========================= */
+
+.alert{
+    width:90%;
+    max-width:900px;
+
+    margin:20px auto;
+
+    padding:14px 20px;
+
+    border-radius:12px;
+
+    font-size:15px;
+    font-weight:500;
+
+    animation:fadeIn 0.4s ease;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin:40px 0;
+}
+
+.buscador form{
+    width:100%;
+    max-width:700px;
+
+    display:flex;
+    gap:10px;
+}
+
+.buscador input{
+    flex:1;
+
+    padding:15px 20px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    background:white;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.08);
+
+    outline:none;
+}
+
+.buscador button{
+    padding:15px 25px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.buscador button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(37,99,235,0.35);
+}
+
+/* =========================
+   TITULOS
+========================= */
+
+.seccion{
+    width:90%;
+    max-width:1400px;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    font-size:28px;
+    font-weight:700;
+
+    color:#0f172a;
+}
+
+/* =========================
+   GRID LIBROS
+========================= */
+
+.contenedor{
+    width:90%;
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(260px,1fr));
+
+    gap:28px;
+
+    padding-bottom:50px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    background:white;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+    transition:0.35s ease;
+
+    position:relative;
+}
+
+.card:hover{
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.15);
+}
+
+.card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:18px;
+}
+
+.card h3{
+    font-size:20px;
+    margin-bottom:10px;
+    color:#0f172a;
+}
+
+.card p{
+    color:#64748b;
+    margin-bottom:6px;
+    font-size:14px;
+}
+
+/* =========================
+   ESTADOS
+========================= */
+
+.estado{
+    margin-top:12px;
+    font-weight:700;
+    font-size:14px;
+}
+
+.disponible{
+    color:#16a34a;
+}
+
+.prestado{
+    color:#dc2626;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+.btn{
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:0.3s;
+
+    margin-top:15px;
+}
+
+.btn-primary{
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.35);
+}
+
+.btn-danger{
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color:white;
+}
+
+.btn-danger:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(239,68,68,0.35);
+}
+
+.btn-disabled{
+    background:#cbd5e1;
+    color:white;
+    cursor:not-allowed;
+}
+
+/* =========================
+   LOGIN / REGISTRO
+========================= */
+
+.auth-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:60px 20px;
+}
+
+.auth-box{
+    width:100%;
+    max-width:450px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.1);
+}
+
+.auth-box h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#0f172a;
+}
+
+.auth-box input{
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:18px;
+
+    border:1px solid #cbd5e1;
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:14px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-grid{
+    width:90%;
+    max-width:1200px;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+}
+
+.dashboard-card{
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+    text-align:center;
+}
+
+.dashboard-card h2{
+    font-size:18px;
+    color:#64748b;
+    margin-bottom:10px;
+}
+
+.dashboard-card h1{
+    font-size:42px;
+    color:#0f172a;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    width:100%;
+    background:#0f172a;
+    color:#cbd5e1;
+
+    text-align:center;
+
+    padding:20px;
+
+    margin-top:40px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+        padding:20px;
+    }
+
+    .menu{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .buscador form{
+        flex-direction:column;
+    }
+
+    .contenedor{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
