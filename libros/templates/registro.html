@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================
+        REGISTRO
+========================= -->
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <!-- TITULO -->
+        <div style="text-align:center; margin-bottom:30px;">
+
+            <div style="
+                font-size:60px;
+                margin-bottom:15px;
+            ">
+                ✨
+            </div>
+
+            <h2 style="
+                font-size:32px;
+                color:#0f172a;
+                margin-bottom:10px;
+            ">
+                Crear cuenta
+            </h2>
+
+            <p style="
+                color:#64748b;
+                line-height:1.6;
+            ">
+                Regístrate para acceder a préstamos,
+                recomendaciones y gestión de libros
+            </p>
+
+        </div>
+
+        <!-- FORM -->
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+            <div style="margin-bottom:20px;">
+
+                <label style="
+                    display:block;
+                    margin-bottom:8px;
+                    font-weight:600;
+                    color:#334155;
+                ">
+                    Usuario
+                </label>
+
+                {{ form.username }}
+
+            </div>
+
+            <!-- PASSWORD 1 -->
+            <div style="margin-bottom:20px;">
+
+                <label style="
+                    display:block;
+                    margin-bottom:8px;
+                    font-weight:600;
+                    color:#334155;
+                ">
+                    Contraseña
+                </label>
+
+                {{ form.password1 }}
+
+            </div>
+
+            <!-- PASSWORD 2 -->
+            <div style="margin-bottom:25px;">
+
+                <label style="
+                    display:block;
+                    margin-bottom:8px;
+                    font-weight:600;
+                    color:#334155;
+                ">
+                    Confirmar contraseña
+                </label>
+
+                {{ form.password2 }}
+
+            </div>
+
+            <!-- BOTON -->
+            <button class="btn btn-primary">
+
+                Crear cuenta
+
+            </button>
+
+        </form>
+
+        <!-- LOGIN -->
+        <div style="
+            text-align:center;
+            margin-top:25px;
+        ">
+
+            <p style="
+                color:#64748b;
+            ">
+                ¿Ya tienes cuenta?
+            </p>
+
+            <a href="{% url 'login' %}" style="
+                color:#2563eb;
+                font-weight:600;
+                text-decoration:none;
+            ">
+                Iniciar sesión
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

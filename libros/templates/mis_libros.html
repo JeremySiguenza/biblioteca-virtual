@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #7c3aed, #4f46e5);
+        --danger: #ef4444;
+        --warning: #f59e0b;
+        --slate-50: #f8fafc;
+        --slate-200: #e2e8f0;
+        --slate-600: #475569;
+        --slate-900: #0f172a;
+    }
+
+    /* Contenedor Principal */
+    .view-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+    }
+
+    /* Hero Section Animado */
+    .hero-section {
+        background: var(--primary-gradient);
+        border-radius: 24px;
+        padding: 60px 40px;
+        color: white;
+        box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.2);
+        margin: 40px 0;
+        animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-section h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+        color: #ddd6fe;
+        max-width: 650px;
+        line-height: 1.7;
+    }
+
+    /* Título de Sección */
+    .section-header {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--slate-900);
+        margin: 40px 0 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* Grid Layout */
+    .loan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    /* Tarjeta de Préstamo */
+    .loan-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--slate-200);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    .loan-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-thumb {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+        background: var(--slate-50);
+    }
+
+    .card-body {
+        padding: 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--slate-900);
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+
+    .book-author {
+        color: var(--slate-600);
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Fechas e Información */
+    .info-row {
+        background: var(--slate-50);
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .date-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--slate-600);
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .date-value {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--slate-900);
+    }
+
+    .urgent {
+        color: var(--danger);
+    }
+
+    /* Estado Vencido */
+    .vencido-alert {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        color: var(--danger);
+        padding: 12px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    /* Botones */
+    .btn-return {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: var(--slate-900);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+        margin-top: auto;
+    }
+
+    .btn-return:hover {
+        background: var(--danger);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    /* Estado Vacío */
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 24px;
+        border: 2px dashed var(--slate-200);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+
+<div class="view-container">
+
+    <!-- HERO -->
+    <header class="hero-section">
+        <h1>Mis Libros</h1>
+        <p>Este es tu rincón personal. Aquí puedes ver tus lecturas actuales y gestionar tus devoluciones de forma sencilla y profesional.</p>
+    </header>
+
+    <h2 class="section-header">
+        <span>📖</span> Préstamos Activos
+    </h2>
+
+    <!-- GRID -->
+    <div class="loan-grid">
+    {% for p in prestamos %}
+        <article class="loan-card">
+            {% if p.libro.imagen %}
+                <img src="{{ p.libro.imagen }}" alt="{{ p.libro.titulo }}" class="book-thumb">
+            {% else %}
+                <img src="https://via.placeholder.com/300x400?text=Sin+Imagen" alt="Sin imagen" class="book-thumb">
+            {% endif %}
+
+            <div class="card-body">
+                <h3 class="book-title">{{ p.libro.titulo }}</h3>
+                <p class="book-author">✍️ {{ p.libro.autor }}</p>
+
+                <!-- FECHAS -->
+                <div class="info-row">
+                    <span class="date-label">Solicitado el</span>
+                    <span class="date-value">{{ p.fecha_solicitud|date:"d M, Y" }}</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="date-label">Fecha Límite</span>
+                    <span class="date-value {% if p.vencido %}urgent{% endif %}">
+                        ⏳ {{ p.fecha_limite|date:"d M, Y" }}
+                    </span>
+                </div>
+
+                <!-- ALERTA VENCIMIENTO -->
+                {% if p.vencido %}
+                <div class="vencido-alert">
+                    <span>⚠️</span> PLAZO VENCIDO
+                </div>
+                {% endif %}
+
+                <!-- ACCIÓN -->
+                <a href="{% url 'devolver' p.id %}" class="btn-return">
+                    Devolver Ejemplar
+                </a>
+            </div>
+        </article>
+    {% empty %}
+        <!-- ESTADO VACÍO -->
+        <div class="empty-state" style="grid-column: 1 / -1;">
+            <div style="font-size: 64px; margin-bottom: 20px;">📖</div>
+            <h2 style="color: var(--slate-900); margin-bottom: 10px;">Tu estantería está vacía</h2>
+            <p style="color: var(--slate-600); margin-bottom: 30px;">Parece que no tienes libros prestados en este momento.</p>
+            <a href="{% url 'inicio' %}" style="
+                background: var(--primary-gradient);
+                color: white;
+                padding: 14px 30px;
+                border-radius: 12px;
+                text-decoration: none;
+                font-weight: 700;
+                display: inline-block;
+            ">
+                Explorar Biblioteca
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

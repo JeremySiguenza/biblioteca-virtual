@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-hover: #1d4ed8;
+        --dark: #0f172a;
+        --slate-200: #e2e8f0;
+        --slate-500: #64748b;
+        --slate-600: #475569;
+        --success-bg: #dcfce7;
+        --success-text: #166534;
+        --danger-bg: #fee2e2;
+        --danger-text: #991b1b;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Animación Base */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade {
+        opacity: 0;
+        animation: fadeInUp 0.7s ease-out forwards;
+    }
+
+    /* Retraso de animación para los primeros elementos (efecto cascada) */
+    .book-card:nth-child(1) { animation-delay: 0.1s; }
+    .book-card:nth-child(2) { animation-delay: 0.2s; }
+    .book-card:nth-child(3) { animation-delay: 0.3s; }
+    .book-card:nth-child(4) { animation-delay: 0.4s; }
+    .book-card:nth-child(n+5) { animation-delay: 0.5s; }
+
+    body {
+        background-color: #f8fafc;
+        color: var(--dark);
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Hero Section */
+    .hero-container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+    }
+
+    .hero-card {
+        background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+        border-radius: 24px;
+        padding: 60px 40px;
+        color: white;
+        box-shadow: var(--shadow-md);
+        text-align: left;
+    }
+
+    .hero-card h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0 0 15px 0;
+        letter-spacing: -1px;
+    }
+
+    .hero-card p {
+        font-size: 1.1rem;
+        color: #94a3b8;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+
+    /* Buscador */
+    .search-wrapper {
+        max-width: 600px;
+        margin: -35px auto 50px;
+        padding: 0 20px;
+    }
+
+    .search-form {
+        display: flex;
+        background: white;
+        padding: 10px;
+        border-radius: 18px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        border: 1px solid var(--slate-200);
+    }
+
+    .search-form input {
+        flex: 1;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .search-form button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .search-form button:hover {
+        background: var(--primary-hover);
+    }
+
+    /* Título de Sección */
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    /* Grid de Libros */
+    .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 35px;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto 80px;
+    }
+
+    .book-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--slate-200);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .book-cover {
+        height: 380px;
+        width: 100%;
+        object-fit: cover;
+        border-bottom: 1px solid var(--slate-200);
+    }
+
+    .book-content {
+        padding: 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark);
+        line-height: 1.2;
+    }
+
+    .book-info-item {
+        font-size: 0.95rem;
+        color: var(--slate-600);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Badges de Estado */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 14px;
+        border-radius: 99px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin: 15px 0;
+        width: fit-content;
+    }
+
+    .badge-available { background: var(--success-bg); color: var(--success-text); }
+    .badge-borrowed { background: var(--danger-bg); color: var(--danger-text); }
+
+    /* Botones */
+    .btn {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+    
+    .btn-disabled { background: var(--slate-200); color: var(--slate-500); cursor: not-allowed; }
+
+    @media (max-width: 768px) {
+        .hero-card { padding: 40px 25px; }
+        .hero-card h1 { font-size: 2.2rem; }
+    }
+</style>
+
+<!-- HERO SECTION -->
+<div class="hero-container animate-fade" style="animation-delay: 0s;">
+    <div class="hero-card">
+        <h1>Biblioteca Virtual</h1>
+        <p>Gestiona tus lecturas, explora nuevos títulos y mantén tu historial de préstamos al día con nuestra plataforma de última generación.</p>
+    </div>
+</div>
+
+<!-- BUSCADOR -->
+<div class="search-wrapper animate-fade" style="animation-delay: 0.2s;">
+    <form method="GET" class="search-form">
+        <input type="text" name="q" placeholder="¿Qué libro buscas hoy?" aria-label="Buscar">
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+<h2 class="section-title"> Catálogo de Libros</h2>
+
+<!-- CONTENEDOR DE LIBROS -->
+<div class="books-grid">
+
+{% for libro in libros %}
+<div class="book-card animate-fade">
+    {% if libro.imagen %}
+        <img src="{{ libro.imagen }}" class="book-cover" alt="{{ libro.titulo }}">
+    {% else %}
+        <img src="https://via.placeholder.com/300x450?text=Sin+Portada" class="book-cover" alt="Sin imagen">
+    {% endif %}
+
+    <div class="book-content">
+        <h3 class="book-title">{{ libro.titulo }}</h3>
+        
+        <div class="book-info-item">
+            <span>✍️</span> <strong>{{ libro.autor }}</strong>
+        </div>
+        
+        <div class="book-info-item">
+            <span>🏷️</span> {{ libro.categoria }}
+        </div>
+
+        {% if libro.disponible %}
+            <span class="badge badge-available">✔ Disponible</span>
+            <a href="{% url 'prestar' libro.id %}" style="text-decoration: none;">
+                <button class="btn btn-primary">Solicitar préstamo</button>
+            </a>
+        {% else %}
+            <span class="badge badge-borrowed">✖ En préstamo</span>
+            <button class="btn btn-disabled" disabled>No disponible</button>
+        {% endif %}
+    </div>
+</div>
+{% empty %}
+<div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+    <h3 style="color: var(--slate-500);">No se encontraron libros en la biblioteca.</h3>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}
